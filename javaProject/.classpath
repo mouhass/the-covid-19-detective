@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="the-COVID-19 -detective/src"/>
+	<classpathentry kind="lib" path="the-COVID-19 -detective/jcalendar-1.4.jar"/>
+	<classpathentry kind="output" path="the-COVID-19 -detective/bin"/>
+</classpath>
