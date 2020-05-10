@@ -24,9 +24,7 @@ public class monTest extends JFrame {
 	boolean fievre=false,fatigue=false,toux=false,courbature=false,congestion=false,ecoulement=false,mauxDeGorge=false;	
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -41,12 +39,11 @@ public class monTest extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	
 	public monTest() {
+		super("   Un simple questionnaire pour vérifier votre santé ");
 		setBackground(Color.WHITE);
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		setBounds(850, 300, 590, 502);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -59,8 +56,8 @@ public class monTest extends JFrame {
 		panel.setBounds(0, 0, 267, 474);
 		contentPane.add(panel);
 		
-		JLabel lblNewLabel = new JLabel("\"\"");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\User\\eclipse-workspace\\wissem\\unnamed.jpg"));
+		JLabel lblNewLabel = new JLabel();
+		lblNewLabel.setIcon(new ImageIcon("image\\unnamed.jpg"));
 		panel.add(lblNewLabel);
 		
 		
@@ -193,8 +190,12 @@ public class monTest extends JFrame {
 		contentPane.add(checkbox_6);
 		
 		TextField textField = new TextField();
-		textField.setBounds(317, 393, 247, 60);
+		textField.setBounds(416, 402, 151, 28);
 		contentPane.add(textField);
+		
+		JLabel lblNewLabel_1 = new JLabel("Votre commentaire");
+		lblNewLabel_1.setBounds(272, 394, 138, 36);
+		contentPane.add(lblNewLabel_1);
 		
 	}
 }

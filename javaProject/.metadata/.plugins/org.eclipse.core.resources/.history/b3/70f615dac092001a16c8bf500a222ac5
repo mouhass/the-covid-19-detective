@@ -1,0 +1,241 @@
+package FenetrePrincipale;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import javax.swing.border.EmptyBorder;
+import com.toedter.calendar.JDateChooser;
+import javax.swing.*;
+
+import java.awt.Color;
+import java.awt.Button;
+import java.awt.Checkbox;
+import java.awt.Label;
+import java.awt.TextField;
+
+//--------------------------------------------------------
+public class carte {
+	
+	public static void main(String[] args) {
+
+		fenetre_principale tunisiamap =new fenetre_principale();
+		tunisiamap.setVisible(true);
+		tunisiamap.setResizable(false);
+		
+	}
+}
+
+//------------------------------------------------------
+class fenetre_principale extends JFrame{
+	
+	 private static Object[] elements =new Object[] {"--","Gafsa","Monastir","Ariana","Beja","Ben_Arous","Bizerte","Gabes","Jendouba","Kairouan","Kasserine","Kebili","Kef","Mahdia","Manouba","Medenine","Monastir","Nabeul","Sfax","Sidi_Bouzid","Siliana","Sousse","Tataouine","Tozeur","Tunis","Zaghouan"};
+	 static JComboBox<String> combobox = new JComboBox(elements);
+	 private static ImageIcon icone = new ImageIcon("image\\image.png");
+	 static JLabel jlabel = new JLabel(icone);
+	 static  JLabel lblImage =new JLabel();
+     static JPanel frame =new JPanel ();
+     static final JDateChooser dateChooser = new JDateChooser();
+     private JButton monBouton1;
+     private JButton monBouton2;
+     private JButton monBouton3;
+     static JTextPane textPane1 = new JTextPane();
+     static JTextPane textPane2 = new JTextPane();
+     static JTextPane textPane3 = new JTextPane();
+	 JLabel compte1;
+	 JLabel compte2;
+	 JLabel compte3;
+	
+	 public fenetre_principale() {
+		
+		
+		super("The COVID 19 detective in Tunisia");
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(0,0, 1500,1000);
+		frame = new JPanel();
+		frame.setBorder(new EmptyBorder(5, 5, 5, 5));
+		frame.setName("jcombobox demo");
+		setContentPane(frame);
+		frame.setLayout(null);
+		//------------calendrier et combobox
+		dateChooser.setDateFormatString("yyyy-MM-dd");
+		dateChooser.setBounds(1000, 90, 185, 19);
+		combobox.setBounds(800, 90, 100, 19);
+		frame.add(dateChooser);
+		frame.add(combobox);
+		//----------l'image 
+		jlabel.setBounds(0, 0, 800, 700);
+		lblImage.setBounds(240, 0, 800, 700);
+		frame.add(lblImage);
+		frame.add(jlabel);
+		//---------les boutons 
+		monBouton3=new JButton("total");
+		monBouton3.setBounds(600, 161, 116, 21);
+		frame.add(monBouton3);
+		ecoutebouton ecout3=new ecoutebouton("total");
+		monBouton3.addActionListener(ecout3);
+		
+		monBouton1=new JButton("recherche");
+		monBouton1.setBounds(1000, 161, 116, 21);
+		frame.add(monBouton1);
+		ecoutebouton ecout=new ecoutebouton("recherche");
+		monBouton1.addActionListener(ecout);
+		
+		monBouton2=new JButton("test");
+		monBouton2.setBounds(850, 161, 116, 21);
+		frame.add(monBouton2);
+		monBouton2.addActionListener(new ActionListener() {
+	 		@Override
+	 		public void actionPerformed(ActionEvent e) {
+	 			
+	 			monTest f = new monTest();
+	 			f.setVisible(true);	
+	 			f.setLocationRelativeTo(null);
+	 		}
+	 	});	
+
+		
+		textPane1.setBounds(1150,230, 144, 35);
+		frame.add(textPane1);
+		textPane2.setBounds(1150,270, 144, 35);
+		frame.add(textPane2);
+		textPane3.setBounds(1150,310, 144, 35);
+		frame.add(textPane3);
+		compte1 = new JLabel("nombre de cas confirmés: ");
+		frame.add(compte1);
+		compte1.setBounds(1000,230, 160, 35);
+		compte2 = new JLabel("nombre de deces");
+		compte2.setBounds(1000,270, 160, 35);
+		frame.add(compte2);
+		compte3 = new JLabel("nombre de cas retablis");
+		frame.add(compte3);
+	    compte3.setBounds(1000,310, 160, 35);
+}}
+	
+	class ecoutebouton  implements ActionListener {
+		//------les methodes de la classe ecoutebouton
+		String chaine;
+		JPanel	frame2 = new JPanel();
+		//----constructeur paramétré
+	   	 public ecoutebouton(String a) {chaine=a;}
+	   	 
+	   	 fenetre_secondaire h =new fenetre_secondaire();
+	   	public void actionPerformed(ActionEvent e) {
+    		 	 String x="";
+    			 String select =((JTextField)fenetre_principale.dateChooser.getDateEditor().getUiComponent()).getText();
+    			 if (chaine.contentEquals("total")) {
+    				 x="total";
+    				
+    			 }
+    			 if (chaine.contentEquals("recherche")) {
+    				 x=  (String) fenetre_principale.combobox.getSelectedItem();
+    				 
+    				 
+    			 }
+    			   if (select.contentEquals("")) 
+    			  {
+    				   JOptionPane.showMessageDialog(null,"selectionner une date");
+    				   fenetre_principale.frame.remove(fenetre_principale.jlabel);
+    				   fenetre_principale.lblImage.setIcon(new  ImageIcon("image\\image.png"));
+ 					 
+    		       }
+    			   else if(chaine.contentEquals("recherche") &&  fenetre_principale.combobox.getSelectedItem().equals("--")){
+    				   JOptionPane.showMessageDialog(null,"selectioner un gouvernerat");
+    			   }
+
+    			   else {
+    				   
+   					String ch="";
+   					String ch1="";
+   					String result[]=new String[6];
+   					String result1[]=new String[6];
+   					String result2[]=new String[6];
+   					try {
+   					FileReader fr=new FileReader("image\\"+x+".txt");
+   					BufferedReader br= new BufferedReader(fr);
+   					
+   					int k;
+   					k=0;
+   					while( br.ready()&&k==0) {
+   						ch=br.readLine();
+   						result = ch.split("\\s");
+   						if (result[0].contentEquals(select)) {
+   							k=1;
+   						}
+   					    }
+   					br.close();
+   					if(k==1) {
+   						if(x.contentEquals("total")) {
+   							fenetre_principale.textPane1.setText(result[1]);
+   							fenetre_principale.textPane2.setText(result[2]);
+   							fenetre_principale.textPane3.setText(result[3]);
+   					}
+   						else {
+   							
+						h.compte.setText("nombre de cas confirmés: "+ result[1]);
+						h.compte1.setText("nombre de deces: "+ result[2]);
+						h.compte2.setText("nombre de cas retablis: "+ result[3]);
+						h.compte3.setText((String)fenetre_principale.combobox.getSelectedItem());
+						h.setVisible(true);
+	   					fenetre_principale.frame.remove(fenetre_principale.jlabel);
+	   					fenetre_principale.lblImage.setIcon(new  ImageIcon("image\\"+fenetre_principale.combobox.getSelectedItem()+".png"));
+   						}
+   					}
+   		   				else {
+   		   						String message;
+   		   						result1 = result[0].split("\\-");
+   		   						result2 = select.split("\\-");
+   		   						int J1=Integer.parseInt(result1[2]);
+   		   						int J2=Integer.parseInt(result2[2]);
+   		   						int M1=Integer.parseInt(result1[1]);
+   		   						int M2=Integer.parseInt(result2[1]);
+   		   						int A1=Integer.parseInt(result1[0]);
+   		   						int A2=Integer.parseInt(result2[0]);
+   		   					    if((J2>J1 && M1==M2 && A1==A2)||( M2>M1 && A1==A2)||(A2>A1)) {
+   		   					    	message="pas encore";
+   		   					    }
+   		   					    else {
+   		                            message= "pas de corona";
+   		   					    }
+   		   					 JOptionPane.showMessageDialog(null,message);
+   		   					}
+    						
+
+   						
+   					}
+   					catch (Exception ex)
+   					{System.out.println("Erreur "+ex);}
+   					finally {}   
+    			   }   			   
+     }
+ }
+
+class fenetre_secondaire extends JFrame {
+	 JLabel compte;
+	 JLabel compte1;
+	 JLabel compte2;
+	 JLabel compte3;
+	 static JPanel frame1;
+	public fenetre_secondaire() {
+		setBounds(600, 50, 450, 300);
+		frame1 = new JPanel();
+		frame1.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(frame1);
+		frame1.setLayout(null);
+		compte = new JLabel("nombre de cas confirmés: ");
+		frame1.add(compte);
+		compte.setBounds(72, 68,291, 21);
+		compte1 = new JLabel("nombre de deces");
+		compte1.setBounds(77, 142,291, 21);
+		frame1.add(compte1);
+		compte2 = new JLabel("nombre de cas retablis");
+		frame1.add(compte2);
+	    compte2.setBounds(77, 214,291, 21);
+	    compte3 = new JLabel("gouvernerat");
+	    frame1.add(compte3);
+	    compte3.setBounds(174, 10, 166, 19);
+	}
+}

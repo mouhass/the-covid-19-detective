@@ -15,33 +15,45 @@ import java.awt.Button;
 import java.awt.Checkbox;
 import java.awt.Label;
 import java.awt.TextField;
+
+//--------------------------------------------------------
 public class carte {
 	
 	public static void main(String[] args) {
 
 		fenetre_principale tunisiamap =new fenetre_principale();
+		tunisiamap.getContentPane().setBackground(new Color(199, 237, 255));
 		tunisiamap.setVisible(true);
+		tunisiamap.setResizable(false);
 		
 	}
 }
+
+//------------------------------------------------------
 class fenetre_principale extends JFrame{
+	
 	 private static Object[] elements =new Object[] {"--","Gafsa","Monastir","Ariana","Beja","Ben_Arous","Bizerte","Gabes","Jendouba","Kairouan","Kasserine","Kebili","Kef","Mahdia","Manouba","Medenine","Monastir","Nabeul","Sfax","Sidi_Bouzid","Siliana","Sousse","Tataouine","Tozeur","Tunis","Zaghouan"};
 	 static JComboBox<String> combobox = new JComboBox(elements);
 	 private static ImageIcon icone = new ImageIcon("image\\image.png");
 	 static JLabel jlabel = new JLabel(icone);
 	 static  JLabel lblImage =new JLabel();
-    static JPanel frame =new JPanel ();
-   static final JDateChooser dateChooser = new JDateChooser();
-   private JButton monBouton1;
-   private JButton monBouton2;
-   private JButton monBouton3;
-   static JTextPane textPane1 = new JTextPane();
-   static JTextPane textPane2 = new JTextPane();
-   static JTextPane textPane3 = new JTextPane();
+     static JPanel frame =new JPanel ();
+     static final JDateChooser dateChooser = new JDateChooser();
+     private JButton monBouton1;
+     private JButton monBouton2;
+     private JButton monBouton3;
+     static JTextPane textPane1 = new JTextPane();
+     static JTextPane textPane2 = new JTextPane();
+     static JTextPane textPane3 = new JTextPane();
 	 JLabel compte1;
 	 JLabel compte2;
 	 JLabel compte3;
-	public fenetre_principale() {
+	
+	 public fenetre_principale() {
+		
+		
+		super("The COVID 19 detective in Tunisia");
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0, 1500,1000);
 		frame = new JPanel();
@@ -49,84 +61,93 @@ class fenetre_principale extends JFrame{
 		frame.setName("jcombobox demo");
 		setContentPane(frame);
 		frame.setLayout(null);
+		//------------calendrier et combobox
 		dateChooser.setDateFormatString("yyyy-MM-dd");
-		dateChooser.setBounds(1200, 90, 185, 19);
-		combobox.setBounds(1100, 90, 100, 19);
+		dateChooser.setBounds(1000, 90, 185, 19);
+		combobox.setBounds(800, 90, 100, 19);
 		frame.add(dateChooser);
 		frame.add(combobox);
+		//----------l'image 
 		jlabel.setBounds(0, 0, 800, 700);
 		lblImage.setBounds(240, 0, 800, 700);
 		frame.add(lblImage);
 		frame.add(jlabel);
+		//---------les boutons 
 		monBouton3=new JButton("total");
-		monBouton3.setBounds(900, 161, 116, 21);
+		monBouton3.setBounds(1000, 400, 116, 21);
 		frame.add(monBouton3);
 		ecoutebouton ecout3=new ecoutebouton("total");
 		monBouton3.addActionListener(ecout3);
+		
 		monBouton1=new JButton("recherche");
-		monBouton1.setBounds(1300, 161, 116, 21);
+		monBouton1.setBounds(1000, 161, 116, 21);
 		frame.add(monBouton1);
 		ecoutebouton ecout=new ecoutebouton("recherche");
 		monBouton1.addActionListener(ecout);
+		
 		monBouton2=new JButton("test");
-		monBouton2.setBounds(1150, 161, 116, 21);
+		monBouton2.setBounds(800, 161, 116, 21);
 		frame.add(monBouton2);
+		
 		monBouton2.addActionListener(new ActionListener() {
 	 		@Override
 	 		public void actionPerformed(ActionEvent e) {
 	 			
 	 			monTest f = new monTest();
 	 			f.setVisible(true);	
+	 			f.setLocationRelativeTo(null);
 	 		}
 	 	});	
 
 		
-		textPane1.setBounds(1150,230, 144, 35);
+		textPane1.setBounds(1150,430, 144, 35);
 		frame.add(textPane1);
-		textPane2.setBounds(1150,270, 144, 35);
+		textPane2.setBounds(1150,470, 144, 35);
 		frame.add(textPane2);
-		textPane3.setBounds(1150,310, 144, 35);
+		textPane3.setBounds(1150,510, 144, 35);
 		frame.add(textPane3);
 		compte1 = new JLabel("nombre de cas confirmés: ");
 		frame.add(compte1);
-		compte1.setBounds(1000,230, 160, 35);
+		compte1.setBounds(1000,430, 160, 35);
 		compte2 = new JLabel("nombre de deces");
-		compte2.setBounds(1000,270, 160, 35);
+		compte2.setBounds(1000,470, 160, 35);
 		frame.add(compte2);
 		compte3 = new JLabel("nombre de cas retablis");
 		frame.add(compte3);
-	    compte3.setBounds(1000,310, 160, 35);
+	    compte3.setBounds(1000,510, 160, 35);
 }}
 	
 	class ecoutebouton  implements ActionListener {
+		//------les methodes de la classe ecoutebouton
 		String chaine;
 		JPanel	frame2 = new JPanel();
-	   	 public ecoutebouton(String a) {chaine=a;};
+		//----constructeur paramétré
+	   	 public ecoutebouton(String a) {chaine=a;}
+	   	 
 	   	 fenetre_secondaire h =new fenetre_secondaire();
 	   	public void actionPerformed(ActionEvent e) {
     		 	 String x="";
-    			 String select =((JTextField)fenetre_principale.dateChooser.getDateEditor().getUiComponent()).getText();
+    			 String select =((JTextField)fenetre_principale.dateChooser.getDateEditor().getUiComponent()).getText();//la date choisie
+    			 
     			 if (chaine.contentEquals("total")) {
-    				 x="total";
+    				 x="total";// x prend la valeur de chaine relative au bouton total
     				
     			 }
     			 if (chaine.contentEquals("recherche")) {
-    				 x=  (String) fenetre_principale.combobox.getSelectedItem();
+    				 x=  (String) fenetre_principale.combobox.getSelectedItem();//x prend la valeur du  mois selectionné 
     				 
     				 
     			 }
-    			   if (select.contentEquals("")) 
+    			   if (select.contentEquals("")) // si l'utilisateur n'a pas choisi une date 
     			  {
     				   JOptionPane.showMessageDialog(null,"selectionner une date");
-    				   fenetre_principale.frame.remove(fenetre_principale.jlabel);
-    				   fenetre_principale.lblImage.setIcon(new  ImageIcon("image\\image.png"));
- 					 
+    				   
     		       }
     			   else if(chaine.contentEquals("recherche") &&  fenetre_principale.combobox.getSelectedItem().equals("--")){
     				   JOptionPane.showMessageDialog(null,"selectioner un gouvernerat");
     			   }
 
-    			   else {
+    			   else {  //si tout est bien on exécute le bloc suivant 
     				   
    					String ch="";
    					String ch1="";
@@ -134,19 +155,20 @@ class fenetre_principale extends JFrame{
    					String result1[]=new String[6];
    					String result2[]=new String[6];
    					try {
-   					FileReader fr=new FileReader("image\\"+x+".txt");
+   					FileReader fr=new FileReader("image\\"+x+".txt");  // la lecture du contenu de chaque fichier contenant les statistiques du covid 19
    					BufferedReader br= new BufferedReader(fr);
    					
-   					int k;
-   					k=0;
+   					int k=0;
+   					
    					while( br.ready()&&k==0) {
    						ch=br.readLine();
-   						result = ch.split("\\s");
+   						result = ch.split(" ");
    						if (result[0].contentEquals(select)) {
    							k=1;
    						}
    					    }
    					br.close();
+   					
    					if(k==1) {
    						if(x.contentEquals("total")) {
    							fenetre_principale.textPane1.setText(result[1]);
@@ -155,10 +177,10 @@ class fenetre_principale extends JFrame{
    					}
    						else {
    							
-						h.compte.setText("nombre de cas confirmés: "+ result[1]);
-						h.compte1.setText("nombre de deces: "+ result[2]);
-						h.compte2.setText("nombre de cas retablis: "+ result[3]);
-						h.compte3.setText((String)fenetre_principale.combobox.getSelectedItem());
+						h.casConfirme.setText("nombre de cas confirmés: "+ result[1]);
+						h.casDeces.setText("nombre de deces: "+ result[2]);
+						h.casRetabli.setText("nombre de cas retablis: "+ result[3]);
+						h.leGouvernorat.setText((String)fenetre_principale.combobox.getSelectedItem());
 						h.setVisible(true);
 	   					fenetre_principale.frame.remove(fenetre_principale.jlabel);
 	   					fenetre_principale.lblImage.setIcon(new  ImageIcon("image\\"+fenetre_principale.combobox.getSelectedItem()+".png"));
@@ -166,8 +188,8 @@ class fenetre_principale extends JFrame{
    					}
    		   				else {
    		   						String message;
-   		   						result1 = result[0].split("\\-");
-   		   						result2 = select.split("\\-");
+   		   						result1 = result[0].split("-");
+   		   						result2 = select.split("-");
    		   						int J1=Integer.parseInt(result1[2]);
    		   						int J2=Integer.parseInt(result2[2]);
    		   						int M1=Integer.parseInt(result1[1]);
@@ -194,10 +216,10 @@ class fenetre_principale extends JFrame{
  }
 
 class fenetre_secondaire extends JFrame {
-	 JLabel compte;
-	 JLabel compte1;
-	 JLabel compte2;
-	 JLabel compte3;
+	 JLabel casConfirme;
+	 JLabel casDeces;
+	 JLabel casRetabli;
+	 JLabel leGouvernorat;
 	 static JPanel frame1;
 	public fenetre_secondaire() {
 		setBounds(600, 50, 450, 300);
@@ -205,17 +227,17 @@ class fenetre_secondaire extends JFrame {
 		frame1.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(frame1);
 		frame1.setLayout(null);
-		compte = new JLabel("nombre de cas confirmés: ");
-		frame1.add(compte);
-		compte.setBounds(72, 68,291, 21);
-		compte1 = new JLabel("nombre de deces");
-		compte1.setBounds(77, 142,291, 21);
-		frame1.add(compte1);
-		compte2 = new JLabel("nombre de cas retablis");
-		frame1.add(compte2);
-	    compte2.setBounds(77, 214,291, 21);
-	    compte3 = new JLabel("gouvernerat");
-	    frame1.add(compte3);
-	    compte3.setBounds(174, 10, 166, 19);
+		casConfirme= new JLabel();
+		frame1.add(casConfirme);
+		casConfirme.setBounds(72, 68,291, 21);
+		casDeces = new JLabel();
+		casDeces.setBounds(77, 142,291, 21);
+		frame1.add(casDeces);
+		casRetabli= new JLabel();
+		frame1.add(casRetabli);
+		casRetabli.setBounds(77, 214,291, 21);
+		leGouvernorat = new JLabel();
+	    frame1.add(leGouvernorat);
+	    leGouvernorat.setBounds(174, 10, 166, 19);
 	}
 }

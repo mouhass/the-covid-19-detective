@@ -1,0 +1,181 @@
+package FenetrePrincipale;
+
+import java.awt.Button;
+import java.awt.Checkbox;
+import java.awt.Color;
+import java.awt.Dimension;   
+import java.awt.FlowLayout;
+import java.awt.Label;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import com.toedter.calendar.JDateChooser;
+
+
+
+import javax.swing.JButton;
+
+
+
+
+
+
+
+
+
+
+public class map /*extends monTest*/{
+	
+	 private static Object[] elements =new Object[] {"--","Gafsa","Monastir","Ariana","Beja","Ben_Arous","Bizerte","Gabes","Jendouba","Kairouan","Kasserine","Kebili","Kef","Mahdia","Manouba","Medenine","Monastir","Nabeul","Sfax","Sidi_Bouzid","Siliana","Sousse","Tataouine","Tozeur","Tunis","Zaghouan"};
+	private static JComboBox<String> combobox = new JComboBox(elements);
+	 private static ImageIcon icone = new ImageIcon("image\\image.png");
+	 private static JLabel jlabel = new JLabel(icone, JLabel.CENTER);
+	
+	private static  JLabel lblImage =new JLabel();
+	private static JFrame frame =new JFrame ();
+	private static final JDateChooser dateChooser = new JDateChooser();
+	private static final JButton btnNewButton = new JButton("test");
+	
+	public map() {
+		
+		
+	}
+	
+	public static void main(String[] args) {
+
+		map tunisiamap =new map();
+		ItemHandler handler = tunisiamap.new ItemHandler();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setPreferredSize(new Dimension(700, 700));
+		frame.getContentPane().setLayout(new FlowLayout());
+		
+		frame.getContentPane().add(dateChooser);
+		
+		dateChooser.setDateFormatString("yyyy-MM-dd");
+		
+		frame.getContentPane().add(combobox);
+		combobox.addItemListener(handler);
+		frame.getContentPane().add(lblImage);
+		frame.getContentPane().add(jlabel);
+		
+		frame.getContentPane().add(btnNewButton);
+		frame.setTitle("jcombobox demo");
+		frame.pack();
+		btnNewButton.addActionListener(new ActionListener() {
+	 		
+	 		@Override
+	 		public void actionPerformed(ActionEvent e) {
+	 			// TODO Auto-generated method stub
+	 			
+	 			monTest f = new monTest();
+	 			f.setVisible(true);
+	 			
+	 		}
+	 	});
+		frame.setVisible(true);
+		
+	}
+	
+ private class ItemHandler implements ItemListener {
+	 
+	   	 public ItemHandler() {};
+    	 public void itemStateChanged(ItemEvent event) {
+    		 
+    		 if (event.getSource() == combobox) {
+    			
+
+    			   if (combobox.getSelectedItem().equals("--")) 
+    			  {
+    				  
+    				   frame.getContentPane().remove(jlabel);
+    				   lblImage.setIcon(new  ImageIcon("image\\image.png"));
+    				   
+      				  
+ 					 
+    		       }
+    			   else if (combobox.getSelectedItem()!="--") {
+    				   String select =((JTextField)dateChooser.getDateEditor().getUiComponent()).getText();
+   					System.out.println(select);
+   					fen1 h =new fen1();
+   					String ch="";
+   					String ch1="";
+   					String tab[]=new String[6];
+   					try {
+   					FileReader fr=new FileReader("image\\"+combobox.getSelectedItem()+".txt");
+   					BufferedReader br= new BufferedReader(fr);
+   					
+   					int k;
+   					k=0;
+   					while( br.ready()&&k==0) {
+   						ch=br.readLine();
+   						tab = ch.split("\\s");
+   						ch1=tab[0];
+   						if (ch1.contentEquals(select)) {
+   							k=1;
+   						}
+   					    }
+   					br.close();
+   				}
+   					catch (Exception ex)
+   					{System.out.println("Erreur "+ex);}
+   					finally {	
+   						
+   				    	String[] result = ch.split("\\s");
+   						h.compte.setText("nombre de cas confirmés: "+ result[1]);
+   						h.compte1.setText("nombre de deces: "+ result[2]);
+   						h.compte2.setText("nombre de cas retablis: "+ result[3]);
+   						h.compte3.setText((String) combobox.getSelectedItem());
+   						h.setVisible(true);
+   					}
+    				   frame.getContentPane().remove(jlabel);
+       				  lblImage.setIcon(new  ImageIcon("image\\"+combobox.getSelectedItem()+".png"));
+    				   
+    			   }
+
+    			   
+    			  
+    		 
+    	 }
+     }
+
+ }
+}
+class fen1 extends JFrame{
+	 JLabel compte;
+	 JLabel compte1;
+	 JLabel compte2;
+	 JLabel compte3;
+	 JPanel frame;
+	public fen1() {
+		setBounds(100, 100, 450, 300);
+		frame = new JPanel();
+		frame.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(frame);
+		frame.setLayout(null);
+		compte = new JLabel("nombre de cas confirmés: ");
+		frame.add(compte);
+		compte.setBounds(72, 68,291, 21);
+		compte1 = new JLabel("nombre de deces");
+		compte1.setBounds(77, 142,291, 21);
+		frame.add(compte1);
+		compte2 = new JLabel("nombre de cas retablis");
+		frame.add(compte2);
+	    compte2.setBounds(77, 214,291, 21);
+	    compte3 = new JLabel("gouvernerat");
+	    frame.add(compte3);
+	    compte3.setBounds(174, 10, 166, 19);
+	}
+}
