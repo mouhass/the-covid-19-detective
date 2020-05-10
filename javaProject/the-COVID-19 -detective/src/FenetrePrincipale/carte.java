@@ -25,21 +25,22 @@ public class carte {
 	}
 }
 class fenetre_principale extends JFrame{
-	// les attributs de la classe fenetre_principale
 	 private static Object[] elements =new Object[] {"--","Gafsa","Monastir","Ariana","Beja","Ben_Arous","Bizerte","Gabes","Jendouba","Kairouan","Kasserine","Kebili","Kef","Mahdia","Manouba","Medenine","Monastir","Nabeul","Sfax","Sidi_Bouzid","Siliana","Sousse","Tataouine","Tozeur","Tunis","Zaghouan"};
 	 static JComboBox<String> combobox = new JComboBox(elements);
-	 private static ImageIcon icone = new ImageIcon("C:\\Users\\Mounir\\Desktop\\javaProject\\the-COVID-19 -detective\\src\\images\\image.png");
+	 private static ImageIcon icone = new ImageIcon("image\\image.png");
 	 static JLabel jlabel = new JLabel(icone);
 	 static  JLabel lblImage =new JLabel();
     static JPanel frame =new JPanel ();
    static final JDateChooser dateChooser = new JDateChooser();
    private JButton monBouton1;
    private JButton monBouton2;
-  private JTextField textField = new JTextField();
-  private JLabel Commentaire = new JLabel("Votre commentaire");
-	
-	
-   // le constructeur 
+   private JButton monBouton3;
+   static JTextPane textPane1 = new JTextPane();
+   static JTextPane textPane2 = new JTextPane();
+   static JTextPane textPane3 = new JTextPane();
+	 JLabel compte1;
+	 JLabel compte2;
+	 JLabel compte3;
 	public fenetre_principale() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0,0, 1500,1000);
@@ -49,90 +50,149 @@ class fenetre_principale extends JFrame{
 		setContentPane(frame);
 		frame.setLayout(null);
 		dateChooser.setDateFormatString("yyyy-MM-dd");
-		dateChooser.setBounds(900, 90, 185, 19);
-		combobox.setBounds(800, 90, 100, 19);
+		dateChooser.setBounds(1200, 90, 185, 19);
+		combobox.setBounds(1100, 90, 100, 19);
 		frame.add(dateChooser);
 		frame.add(combobox);
-		
 		jlabel.setBounds(0, 0, 800, 700);
-		textField.setBounds(1000, 300, 300, 20);
-		Commentaire.setBounds(800, 300, 130, 14);
-		frame.add(Commentaire);
 		lblImage.setBounds(240, 0, 800, 700);
-		frame.add(textField);
 		frame.add(lblImage);
 		frame.add(jlabel);
+		monBouton3=new JButton("total");
+		monBouton3.setBounds(900, 161, 116, 21);
+		frame.add(monBouton3);
+		ecoutebouton ecout3=new ecoutebouton("total");
+		monBouton3.addActionListener(ecout3);
 		monBouton1=new JButton("recherche");
-		monBouton1.setBounds(1000, 161, 116, 21);
+		monBouton1.setBounds(1300, 161, 116, 21);
 		frame.add(monBouton1);
-		ecoutebouton ecout=new ecoutebouton();
+		ecoutebouton ecout=new ecoutebouton("recherche");
 		monBouton1.addActionListener(ecout);
 		monBouton2=new JButton("test");
-		monBouton2.setBounds(800, 161, 116, 21);
+		monBouton2.setBounds(1150, 161, 116, 21);
 		frame.add(monBouton2);
-		
 		monBouton2.addActionListener(new ActionListener() {
 	 		@Override
 	 		public void actionPerformed(ActionEvent e) {
 	 			
 	 			monTest f = new monTest();
 	 			f.setVisible(true);	
-	 			f.setLocationRelativeTo(null);
 	 		}
 	 	});	
+
+		
+		textPane1.setBounds(1150,230, 144, 35);
+		frame.add(textPane1);
+		textPane2.setBounds(1150,270, 144, 35);
+		frame.add(textPane2);
+		textPane3.setBounds(1150,310, 144, 35);
+		frame.add(textPane3);
+		compte1 = new JLabel("nombre de cas confirmés: ");
+		frame.add(compte1);
+		compte1.setBounds(1000,230, 160, 35);
+		compte2 = new JLabel("nombre de deces");
+		compte2.setBounds(1000,270, 160, 35);
+		frame.add(compte2);
+		compte3 = new JLabel("nombre de cas retablis");
+		frame.add(compte3);
+	    compte3.setBounds(1000,310, 160, 35);
 }}
-	// la classe qui gère la reaction des boutons à propos des évènements 
+	
 	class ecoutebouton  implements ActionListener {
+		String chaine;
 		JPanel	frame2 = new JPanel();
-	   	 public ecoutebouton() {};
+	   	 public ecoutebouton(String a) {chaine=a;};
+	   	 fenetre_secondaire h =new fenetre_secondaire();
 	   	public void actionPerformed(ActionEvent e) {
-    		 	
+    		 	 String x="";
     			 String select =((JTextField)fenetre_principale.dateChooser.getDateEditor().getUiComponent()).getText();
-    			   if (fenetre_principale.combobox.getSelectedItem().equals("--")) 
+    			 if (chaine.contentEquals("total")) {
+    				 x="total";
+    				
+    			 }
+    			 if (chaine.contentEquals("recherche")) {
+    				 x=  (String) fenetre_principale.combobox.getSelectedItem();
+    				 
+    				 
+    			 }
+    			   if (select.contentEquals("")) 
     			  {
+    				   JOptionPane.showMessageDialog(null,"selectionner une date");
     				   fenetre_principale.frame.remove(fenetre_principale.jlabel);
-    				   fenetre_principale.lblImage.setIcon(new  ImageIcon("C:\\Users\\Mounir\\Desktop\\javaProject\\the-COVID-19 -detective\\src\\images\\image.png"));
+    				   fenetre_principale.lblImage.setIcon(new  ImageIcon("image\\image.png"));
  					 
     		       }
+    			   else if(chaine.contentEquals("recherche") &&  fenetre_principale.combobox.getSelectedItem().equals("--")){
+    				   JOptionPane.showMessageDialog(null,"selectioner un gouvernerat");
+    			   }
+
     			   else {
-    				   fenetre_secondaire h =new fenetre_secondaire();
+    				   
    					String ch="";
    					String ch1="";
-   					String tab[]=new String[6];
+   					String result[]=new String[6];
+   					String result1[]=new String[6];
+   					String result2[]=new String[6];
    					try {
-   					FileReader fr=new FileReader("C:\\Users\\Mounir\\Desktop\\javaProject\\the-COVID-19 -detective\\src\\images\\"+fenetre_principale.combobox.getSelectedItem()+".txt");
+   					FileReader fr=new FileReader("image\\"+x+".txt");
    					BufferedReader br= new BufferedReader(fr);
    					
    					int k;
    					k=0;
    					while( br.ready()&&k==0) {
    						ch=br.readLine();
-   						tab = ch.split("\\s");
-   						ch1=tab[0];
-   						if (ch1.contentEquals(select)) {
+   						result = ch.split("\\s");
+   						if (result[0].contentEquals(select)) {
    							k=1;
    						}
    					    }
    					br.close();
-   				}
+   					if(k==1) {
+   						if(x.contentEquals("total")) {
+   							fenetre_principale.textPane1.setText(result[1]);
+   							fenetre_principale.textPane2.setText(result[2]);
+   							fenetre_principale.textPane3.setText(result[3]);
+   					}
+   						else {
+   							
+						h.compte.setText("nombre de cas confirmés: "+ result[1]);
+						h.compte1.setText("nombre de deces: "+ result[2]);
+						h.compte2.setText("nombre de cas retablis: "+ result[3]);
+						h.compte3.setText((String)fenetre_principale.combobox.getSelectedItem());
+						h.setVisible(true);
+	   					fenetre_principale.frame.remove(fenetre_principale.jlabel);
+	   					fenetre_principale.lblImage.setIcon(new  ImageIcon("image\\"+fenetre_principale.combobox.getSelectedItem()+".png"));
+   						}
+   					}
+   		   				else {
+   		   						String message;
+   		   						result1 = result[0].split("\\-");
+   		   						result2 = select.split("\\-");
+   		   						int J1=Integer.parseInt(result1[2]);
+   		   						int J2=Integer.parseInt(result2[2]);
+   		   						int M1=Integer.parseInt(result1[1]);
+   		   						int M2=Integer.parseInt(result2[1]);
+   		   						int A1=Integer.parseInt(result1[0]);
+   		   						int A2=Integer.parseInt(result2[0]);
+   		   					    if((J2>J1 && M1==M2 && A1==A2)||( M2>M1 && A1==A2)||(A2>A1)) {
+   		   					    	message="pas encore";
+   		   					    }
+   		   					    else {
+   		                            message= "pas de corona";
+   		   					    }
+   		   					 JOptionPane.showMessageDialog(null,message);
+   		   					}
+    						
+
+   						
+   					}
    					catch (Exception ex)
    					{System.out.println("Erreur "+ex);}
-   					finally {	
-   						
-   				    	String[] result = ch.split("\\s");
-   						h.compte.setText("nombre de cas confirmés: "+ result[1]);
-   						h.compte1.setText("nombre de cas guéris: "+ result[2]);
-   						h.compte2.setText("nombre de cas décès: "+ result[3]);
-   						h.compte3.setText((String)fenetre_principale.combobox.getSelectedItem());
-   						h.setVisible(true);
-   					}
-   					fenetre_principale.frame.remove(fenetre_principale.jlabel);
-   					fenetre_principale.lblImage.setIcon(new  ImageIcon("C:\\Users\\Mounir\\Desktop\\javaProject\\the-COVID-19 -detective\\src\\images\\"+fenetre_principale.combobox.getSelectedItem()+".png"));
-    				   
-    			   }    			   
+   					finally {}   
+    			   }   			   
      }
  }
-// la fenetre qui affiche les statistiques du Covid-19 pour chaque gouvernorat
+
 class fenetre_secondaire extends JFrame {
 	 JLabel compte;
 	 JLabel compte1;
@@ -159,4 +219,3 @@ class fenetre_secondaire extends JFrame {
 	    compte3.setBounds(174, 10, 166, 19);
 	}
 }
-

@@ -1,0 +1,187 @@
+
+package FenetrePrincipale;
+
+import java.awt.Color;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import com.toedter.calendar.JDateChooser;
+
+class carte
+
+{
+public static void main(String[] args) {
+
+		fenetre_principale tunisiamap =new fenetre_principale();
+		
+		tunisiamap.setVisible(true);
+		tunisiamap.setResizable(false);
+		
+	}
+}
+
+
+
+class fenetre_principale extends JFrame{
+		
+	// les attributs de la classe fenetre_principale
+	 private static Object[] elements =new Object[] {"--","Gafsa","Monastir","Ariana","Beja","Ben_Arous","Bizerte","Gabes","Jendouba","Kairouan","Kasserine","Kebili","Kef","Mahdia","Manouba","Medenine","Monastir","Nabeul","Sfax","Sidi_Bouzid","Siliana","Sousse","Tataouine","Tozeur","Tunis","Zaghouan"};
+	 static JComboBox<String> combobox = new JComboBox(elements);
+	 ImageIcon img1 = new ImageIcon(getClass().getResource("image.jpg"));
+		JLabel lblNewLabel = new JLabel("img1");
+		lblNewLabel.setBounds(800, 500, 24, 75);
+	 static JLabel jlabel = new JLabel(icone);// Où se trouve l'image de la tunisie 
+	 static  JLabel lblImage =new JLabel();
+     static JPanel panel =new JPanel ();
+     
+     static final JDateChooser dateChooser = new JDateChooser();
+   
+   
+	
+   // le constructeur 
+	public fenetre_principale() {
+		
+		super("The COVID 19 detective in Tunisia");
+		ImageIcon img = new ImageIcon(getClass().getResource("TunisiaVsCorona.jpg"));
+		JLabel lblNewLabel = new JLabel("img");
+		lblNewLabel.setBounds(0, 0, 241, 759);
+		
+		panel = new JPanel();
+		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panel.setName("myPanel");
+		setContentPane(panel);
+		panel.setLayout(null); 
+		JTextField textField = new JTextField();
+		JLabel Commentaire = new JLabel("Votre commentaire");
+		panel.add(lblNewLabel);
+		jlabel.setBounds(0, 0, 800, 700);
+		textField.setBounds(1000, 300, 300, 20);
+		Commentaire.setBounds(800, 300, 130, 14);
+		panel.add(Commentaire);
+		lblImage.setBounds(240, 0, 800, 700);
+		panel.add(textField);
+		panel.add(lblImage);
+		panel.add(jlabel);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(0,0, 1500,900);
+		
+		JButton monBouton1;// bouton de recherche
+		JButton monBouton2;// bouton 
+		  
+		dateChooser.setDateFormatString("yyyy-MM-dd");
+		dateChooser.setBounds(900, 90, 185, 19);
+		combobox.setBounds(800, 90, 100, 19);
+		panel.add(dateChooser);
+		panel.add(combobox);
+		
+		
+		monBouton1=new JButton("recherche");
+		monBouton1.setBounds(1000, 161, 116, 21);
+		panel.add(monBouton1);
+		ecoutebouton ecout=new ecoutebouton();
+		monBouton1.addActionListener(ecout);
+		monBouton2=new JButton("test");
+		monBouton2.setBounds(800, 161, 116, 21);
+		panel.add(monBouton2);
+		
+		monBouton2.addActionListener(new ActionListener() {
+	 		
+	 		public void actionPerformed(ActionEvent e) {
+	 			
+	 			monTest f = new monTest();
+	 			f.setVisible(true);	
+	 			f.setLocationRelativeTo(null);
+	 		}
+	 	});	
+}}
+	// la classe qui gère la reaction des boutons à propos des évènements 
+	class ecoutebouton  implements ActionListener {
+		
+	   	 public ecoutebouton() {};
+	   	public void actionPerformed(ActionEvent e) {
+    		 	
+    			 String select =((JTextField)fenetre_principale.dateChooser.getDateEditor().getUiComponent()).getText();
+    			   if (fenetre_principale.combobox.getSelectedItem().equals("--")) 
+    			  {
+    				   fenetre_principale.panel.remove(fenetre_principale.jlabel);
+    				   fenetre_principale.lblImage.setIcon(new  ImageIcon("C:\\Users\\Mounir\\Desktop\\javaProject\\the-COVID-19 -detective\\src\\images\\image.png"));
+ 					 
+    		       }
+    			   else {
+    				   fenetre_secondaire h =new fenetre_secondaire();
+   					String ch="";
+   					String ch1="";
+   					String tab[]=new String[6];
+   					try {
+   					FileReader fr=new FileReader("C:\\Users\\Mounir\\Desktop\\javaProject\\the-COVID-19 -detective\\src\\images\\"+fenetre_principale.combobox.getSelectedItem()+".txt");
+   					BufferedReader br= new BufferedReader(fr);
+   					
+   					int k;
+   					k=0;
+   					while( br.ready()&&k==0) {
+   						ch=br.readLine();
+   						tab = ch.split("\\s");
+   						ch1=tab[0];
+   						if (ch1.contentEquals(select)) {
+   							k=1;
+   						}
+   					    }
+   					br.close();
+   				}
+   					catch (Exception ex)
+   					{System.out.println("Erreur "+ex);}
+   					finally {	
+   						
+   				    	String[] result = ch.split("\\s");
+   						h.compte.setText("nombre de cas confirmés: "+ result[1]);
+   						h.compte1.setText("nombre de cas guéris: "+ result[2]);
+   						h.compte2.setText("nombre de cas décès: "+ result[3]);
+   						h.compte3.setText((String)fenetre_principale.combobox.getSelectedItem());
+   						h.setVisible(true);
+   					}
+   					fenetre_principale.panel.remove(fenetre_principale.jlabel);
+   					fenetre_principale.lblImage.setIcon(new  ImageIcon("C:\\Users\\Mounir\\Desktop\\javaProject\\the-COVID-19 -detective\\src\\images\\"+fenetre_principale.combobox.getSelectedItem()+".png"));
+    				   
+    			   }    			   
+     }
+ }
+// la fenetre qui affiche les statistiques du Covid-19 pour chaque gouvernorat
+class fenetre_secondaire extends JFrame {
+	 JLabel compte;
+	 JLabel compte1;
+	 JLabel compte2;
+	 JLabel compte3;
+	 static JPanel panel1;
+	public fenetre_secondaire() {
+		setBounds(600, 50, 450, 300);
+		panel1 = new JPanel();
+		panel1.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(panel1);
+		panel1.setLayout(null);
+		compte = new JLabel("nombre de cas confirmés: ");
+		panel1.add(compte);
+		compte.setBounds(72, 68,291, 21);
+		compte1 = new JLabel("nombre de deces");
+		compte1.setBounds(77, 142,291, 21);
+		panel1.add(compte1);
+		compte2 = new JLabel("nombre de cas retablis");
+		panel1.add(compte2);
+	    compte2.setBounds(77, 214,291, 21);
+	    compte3 = new JLabel("gouvernerat");
+	    panel1.add(compte3);
+	    compte3.setBounds(174, 10, 166, 19);
+	}
+}
+
